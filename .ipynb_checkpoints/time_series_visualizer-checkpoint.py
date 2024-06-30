@@ -12,8 +12,6 @@ df.set_index('date')
 df = df[(df['value'] >= df['value'].quantile(0.025)) &
         (df['value'] <= df['value'].quantile(0.975))]
 months= ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-mon= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
 
 
 def draw_line_plot():
@@ -34,8 +32,8 @@ def draw_bar_plot():
     df_bar['month'] = df_bar['date'].dt.month_name(locale='English')
     df_bar['year'] = df_bar['date'].dt.year
     # Draw bar plot
-    fig, ax = plt.subplots(figsize=(5, 5))
-    ax = sns.barplot(x="year", hue="month", y="value", hue_order=months, data=df_bar, errorbar=None)
+    fig, ax = plt.subplots(figsize=(15, 5))
+    ax = sns.barplot(x="year", hue="month", y="value", data=df_bar, hue_order=months, ci=None)
     ax.set(xlabel="Years", ylabel="Average Page Views")
     # Save image and return fig (don't change this part)
     fig.savefig('bar_plot.png')
@@ -60,12 +58,10 @@ def draw_box_plot():
     df_box['month'] = [d.strftime('%b') for d in df_box.date]
 
     # Draw box plots (using Seaborn)
-    sns.set_theme(style="ticks", palette="pastel")
-    fig, (ax1, ax2) = plt.subplots(1,2,figsize=(15,5))
-    ax1 = sns.boxplot(x='year', y="value",hue="year", data=df_box, ax=ax1)
-    ax2 = sns.boxplot(x='month', y="value", hue="month", order=mon, data=df_box, ax=ax2)
-    ax1.set(xlabel="Year", ylabel="Page Views", title="Year-wise Box Plot (Trend)")
-    ax2.set(xlabel="Month", ylabel="Page Views", title="Month-wise Box Plot (Seasonality)")
+
+
+
+
 
     # Save image and return fig (don't change this part)
     fig.savefig('box_plot.png')
